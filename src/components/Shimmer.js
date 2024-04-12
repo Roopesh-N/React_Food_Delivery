@@ -1,0 +1,15 @@
+export const Shimmer=()=>{
+    return (
+        <div className="Shimmer-container">
+            <div className="Shimmer-card">some cards</div>            
+            <div className="Shimmer-card"></div>            
+            <div className="Shimmer-card"></div>            
+            <div className="Shimmer-card"></div>            
+            <div className="Shimmer-card"></div>            
+            <div className="Shimmer-card"></div>            
+            <div className="Shimmer-card"></div>            
+
+
+        </div>
+    )
+}
