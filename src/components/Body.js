@@ -5,6 +5,9 @@ import { Shimmer } from "./Shimmer.js";
 
 const Body=()=>{
     const [listofRest, setlistofRest]=useState([]);
+    const [filteredRestlist, setfilteredRestlist]=useState([]);
+
+    const [inputText,setinputText]=useState("");
 
     useEffect(()=>{
         fetchdata();
@@ -13,6 +16,7 @@ const Body=()=>{
 
     const fetchdata=async ()=>{
         setlistofRest(restList);
+        setfilteredRestlist(restList);
         // const api=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         // const data=await api.json()
         // console.log(data)
@@ -25,17 +29,29 @@ const Body=()=>{
 
     return (
         <div className="body">
-            <div className="btn-class">
+            <div className="filter-class">
+                <div className="Search-class">
+                    <input type="text" className="input" value={inputText} onChange={(inp)=>{
+                        setinputText(inp.target.value);
+                    }}></input>
+                    <button className="search-btn" onClick={()=>{
+                        // setlistofRest(restList);
+                        const filteredlist=listofRest.filter((res)=>res.name.toLowerCase().includes(inputText.toLowerCase()));
+                        setfilteredRestlist(filteredlist);
+                    }}>Search</button>
+                </div>
+
+
                 <button className="Filter-btn" onClick={()=>{
-                    const filteredlist=listofRest.filter(
+                    const filteredlist=filteredRestlist.filter(
                         (res)=> res.stars>=4
                     );
-                    setlistofRest(filteredlist);
+                    setfilteredRestlist(filteredlist);
                 }}>Top rated restaurants</button>
             </div>
             <div className="res-container">
                 {
-                    listofRest.map((resto)=><Rescard key={resto.name} resData={resto}/>)
+                    filteredRestlist.map((resto)=><Rescard key={resto.name} resData={resto}/>)
                 }
             </div>
         </div>

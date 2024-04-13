@@ -1,6 +1,6 @@
 import { IMG_URL } from "../utils/constants"
 
-export const Rescard=(props)=>{
+const Rescard=(props)=>{
     const {resData}=props
     return (
         <div className="res-card">
