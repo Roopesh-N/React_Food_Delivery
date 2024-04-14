@@ -1,10 +1,11 @@
 import Rescard from "./ResCard"
-import restList from "../utils/mockData.js"
 import { useState , useEffect} from "react";
 import { Shimmer } from "./Shimmer.js";
+import { SWIGGY_API } from "../utils/constants.js";
 
 const Body=()=>{
     const [listofRest, setlistofRest]=useState([]);
+
     const [filteredRestlist, setfilteredRestlist]=useState([]);
 
     const [inputText,setinputText]=useState("");
@@ -15,14 +16,15 @@ const Body=()=>{
     },[]);
 
     const fetchdata=async ()=>{
-        setlistofRest(restList);
-        setfilteredRestlist(restList);
-        // const api=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-        // const data=await api.json()
-        // console.log(data)
+        
+        const api=await fetch({SWIGGY_API});
+        const jsondata=await api.json()
+        const apidata=(jsondata.data.cards[4].card.card.gridElements.infoWithStyle.restaurants); //path in api to get resta info
+        setlistofRest(apidata);
+        setfilteredRestlist(apidata);
     };
+
     if (listofRest.length===0){
-        console.log("loading")
         return <Shimmer/>
     }
 
@@ -49,9 +51,10 @@ const Body=()=>{
                     setfilteredRestlist(filteredlist);
                 }}>Top rated restaurants</button>
             </div>
+
             <div className="res-container">
                 {
-                    filteredRestlist.map((resto)=><Rescard key={resto.name} resData={resto}/>)
+                    filteredRestlist.map((resto)=><Rescard key={resto.info.id} resData={resto.info}/>)
                 }
             </div>
         </div>
