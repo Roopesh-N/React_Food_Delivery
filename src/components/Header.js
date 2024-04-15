@@ -1,10 +1,18 @@
 
 import {LOGO_URL} from "../utils/constants";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const HeaderPart=()=>{
     const [btnName,setbtnName]=useState("Login");
-    console.log("header rerender")
+    console.log("header re-render")
+
+    useEffect(()=>{
+        console.log("useeffect called")
+
+    },[])
+
+
 
     return (<div className="Header-class">
         <div className="logo-class">
@@ -12,9 +20,9 @@ const HeaderPart=()=>{
         </div>
         <div className="Nav-items">
             <ul>
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Contact Us</li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="#">Contact Us</Link></li>
                 <li>Cart</li>
                 <li><button className="login-btn" onClick={()=>{
                     if(btnName=="Login"){

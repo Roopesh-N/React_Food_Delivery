@@ -1,7 +1,8 @@
 import Rescard from "./ResCard"
 import { useState , useEffect} from "react";
 import { Shimmer } from "./Shimmer.js";
-import { SWIGGY_API } from "../utils/constants.js";
+import { SWIGGY_URL } from "../utils/constants.js";
+import { Link } from "react-router-dom";
 
 const Body=()=>{
     const [listofRest, setlistofRest]=useState([]);
@@ -16,10 +17,10 @@ const Body=()=>{
     },[]);
 
     const fetchdata=async ()=>{
-        
-        const api=await fetch({SWIGGY_API});
-        const jsondata=await api.json()
-        const apidata=(jsondata.data.cards[4].card.card.gridElements.infoWithStyle.restaurants); //path in api to get resta info
+        //added proxy cors io to api
+        const api=await fetch(SWIGGY_URL);
+        const data=await api.json()
+        const apidata=(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
         setlistofRest(apidata);
         setfilteredRestlist(apidata);
     };
@@ -38,7 +39,7 @@ const Body=()=>{
                     }}></input>
                     <button className="search-btn" onClick={()=>{
                         // setlistofRest(restList);
-                        const filteredlist=listofRest.filter((res)=>res.name.toLowerCase().includes(inputText.toLowerCase()));
+                        const filteredlist=listofRest.filter((res)=>res.info.name.toLowerCase().includes(inputText.toLowerCase()));
                         setfilteredRestlist(filteredlist);
                     }}>Search</button>
                 </div>
@@ -46,16 +47,19 @@ const Body=()=>{
 
                 <button className="Filter-btn" onClick={()=>{
                     const filteredlist=filteredRestlist.filter(
-                        (res)=> res.stars>=4
-                    );
+                        (resto)=> resto.info.avgRating >=4 );
                     setfilteredRestlist(filteredlist);
                 }}>Top rated restaurants</button>
             </div>
 
             <div className="res-container">
                 {
-                    filteredRestlist.map((resto)=><Rescard key={resto.info.id} resData={resto.info}/>)
-                }
+                    filteredRestlist.map((resto)=>(<Link to={"/restaurant/" + resto.info.id} key={resto.info.id}> <Rescard  resData={resto.info}/></Link>
+                        
+                        ))}
+                {/* <div className="Showmore-btn">
+                <button>Show More</button>
+            </div> */}
             </div>
         </div>
     )
