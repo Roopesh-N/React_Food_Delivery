@@ -1,47 +1,26 @@
-import { useState, useEffect } from "react"
+
 import { Shimmer } from "./Shimmer";
-import { json } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { REST_URL } from "../utils/constants";
+import useRestMenu from "../utils/useRestMenu";
 
 const Restaurant=()=>{
 
-    const [RestInfo,setRestInfo]= useState(null);
-
     const { restId } = useParams();
 
-
-    useEffect(()=>{
-        fetchMenu();
-
-    },[])
-
-    const fetchMenu=async ()=>{
-        const data= await fetch(REST_URL+restId);
-        const json = await data.json();
-
-        // const items=(jsondata.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards);
-        // console.log(jsondata.data);
-        setRestInfo(json.data);
-        
-    }
+    const RestInfo= useRestMenu(restId);
 
     if(RestInfo===null){
        return <Shimmer/>
     }
-
-    // const {RestaurantName,cuisins,}
     const {name,cuisines,costForTwoMessage,avgRating}=RestInfo.cards[2].card.card.info;
 
     var {itemCards}= (RestInfo.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card);
 
     if(itemCards===undefined){
-
+        //setting diff path for some restaurants
       var {itemCards}= (RestInfo.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);
 
     }
-    
-    // (RestInfo.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);
 
     console.log(itemCards);
 

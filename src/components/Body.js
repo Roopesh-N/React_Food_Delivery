@@ -54,7 +54,9 @@ const Body=()=>{
 
             <div className="res-container">
                 {
-                    filteredRestlist.map((resto)=>(<Link to={"/restaurant/" + resto.info.id} key={resto.info.id}> <Rescard  resData={resto.info}/></Link>
+                    filteredRestlist.map((resto)=>(<Link to={"/restaurant/" + resto.info.id} key={resto.info.id}> 
+                    <Rescard  resData={resto.info}/>
+                    </Link>
                         
                         ))}
                 {/* <div className="Showmore-btn">
