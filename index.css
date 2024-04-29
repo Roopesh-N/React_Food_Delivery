@@ -1,4 +1,8 @@
-.Header-class{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .Header-class{
     display: flex;
     justify-content: space-between;
     padding: 5px 5px;
@@ -77,4 +81,4 @@ a{
 
 .user-class{
     border: 2px solid black;
-}
+} */

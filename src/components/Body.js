@@ -1,61 +1,60 @@
-import Rescard from "./ResCard"
+import Rescard,{PromotedResCard} from "./ResCard"
 import { useState , useEffect} from "react";
 import { Shimmer } from "./Shimmer.js";
 import { SWIGGY_URL } from "../utils/constants.js";
 import { Link } from "react-router-dom";
-
+import useOnlineStatus from "../utils/useOnlineStatus.js";
+import useRest from "../utils/useRest.js";
 const Body=()=>{
-    const [listofRest, setlistofRest]=useState([]);
 
+    let listofRest=useRest();
     const [filteredRestlist, setfilteredRestlist]=useState([]);
-
     const [inputText,setinputText]=useState("");
+
+    const PromotedCard=PromotedResCard(Rescard);
+    // console.log(listofRest);
 
     useEffect(()=>{
         fetchdata();
-        
-    },[]);
-
+    },[listofRest]); //if i use [] dependency, it wont gives data for next re-renders.
+    //if I used [] dependency here, every time the page rendered, this will get actual list of rest and update the filtered rest with actual list and filters wont work.
+    //if i wont use listofrest dependency Home in header is not working because the useRest is rendered only once
     const fetchdata=async ()=>{
-        //added proxy cors io to api
-        const api=await fetch(SWIGGY_URL);
-        const data=await api.json()
-        const apidata=(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
-        setlistofRest(apidata);
-        setfilteredRestlist(apidata);
+        setfilteredRestlist(listofRest);
     };
 
     if (listofRest.length===0){
         return <Shimmer/>
     }
-
-
+    
     return (
         <div className="body">
-            <div className="filter-class">
-                <div className="Search-class">
-                    <input type="text" className="input" value={inputText} onChange={(inp)=>{
+            <div className="filter flex">
+                <div className="search m-4 p-2">
+                    <input type="text" className="border border-solid border-gray m-5 shadow-md" value={inputText} onChange={(inp)=>{
                         setinputText(inp.target.value);
                     }}></input>
-                    <button className="search-btn" onClick={()=>{
+                    <button className="bg-green-400 px-3 py-1 rounded-md pr-3 " onClick={()=>{
                         // setlistofRest(restList);
-                        const filteredlist=listofRest.filter((res)=>res.info.name.toLowerCase().includes(inputText.toLowerCase()));
-                        setfilteredRestlist(filteredlist);
+                        const searchedlist=listofRest.filter((res)=>res.info.name.toLowerCase().includes(inputText.toLowerCase()));
+                        setfilteredRestlist(searchedlist);
                     }}>Search</button>
+                    
+                </div>
+                <div className="filter m-4 p-4 flex items-center">
+                <button className="px-4 py-2 bg-gray-300 rounded-md" onClick={()=>{
+                    const toprated=filteredRestlist.filter(
+                        (resto)=> resto.info.avgRating >=4.5 );
+                    setfilteredRestlist(toprated);
+                }}>Top rated restaurants</button>
                 </div>
 
-
-                <button className="Filter-btn" onClick={()=>{
-                    const filteredlist=filteredRestlist.filter(
-                        (resto)=> resto.info.avgRating >=4 );
-                    setfilteredRestlist(filteredlist);
-                }}>Top rated restaurants</button>
             </div>
 
-            <div className="res-container">
+            <div className="res-container flex flex-wrap">
                 {
                     filteredRestlist.map((resto)=>(<Link to={"/restaurant/" + resto.info.id} key={resto.info.id}> 
-                    <Rescard  resData={resto.info}/>
+                    {resto.info.avgRating>=4.5? <PromotedCard resData={resto.info}/> : <Rescard  resData={resto.info}/>}
                     </Link>
                         
                         ))}
@@ -66,5 +65,6 @@ const Body=()=>{
         </div>
     )
 }
+
 
 export default Body

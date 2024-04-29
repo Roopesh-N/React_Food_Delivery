@@ -11,7 +11,6 @@ export class About extends React.Component{
         console.log("parent Cmount")
     }
 
-
     render(){
         console.log("child constructor")
         return (
