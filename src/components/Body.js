@@ -1,15 +1,17 @@
 import Rescard,{PromotedResCard} from "./ResCard"
-import { useState , useEffect} from "react";
+import { useState , useEffect,useContext} from "react";
 import { Shimmer } from "./Shimmer.js";
 import { SWIGGY_URL } from "../utils/constants.js";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
 import useRest from "../utils/useRest.js";
+import userContexts from "../utils/userContexts.js";
 const Body=()=>{
 
     let listofRest=useRest();
     const [filteredRestlist, setfilteredRestlist]=useState([]);
     const [inputText,setinputText]=useState("");
+
 
     const PromotedCard=PromotedResCard(Rescard);
     // console.log(listofRest);
@@ -26,6 +28,7 @@ const Body=()=>{
     if (listofRest.length===0){
         return <Shimmer/>
     }
+    const {loggedInUser,setusername}=useContext(userContexts);
     
     return (
         <div className="body">
@@ -47,6 +50,12 @@ const Body=()=>{
                         (resto)=> resto.info.avgRating >=4.5 );
                     setfilteredRestlist(toprated);
                 }}>Top rated restaurants</button>
+                </div>
+                <div>
+                    <label>Username:</label>
+                    <input className="border border-solid border-gray m-5 shadow-md" value={loggedInUser} onChange={(e)=>{
+                        setusername(e.target.value)
+                    }}></input>
                 </div>
 
             </div>

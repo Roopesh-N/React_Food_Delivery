@@ -10,6 +10,7 @@ const Restaurant=()=>{
     const { restId } = useParams();
 
     const RestInfo=useRestMenu(restId);
+    const [popdowncategory,setpopdowncategory]=useState(null);
 
     if(RestInfo===null){
        return <Shimmer/>
@@ -18,8 +19,7 @@ const Restaurant=()=>{
     const {name,cuisines,costForTwoMessage,avgRating}=RestInfo?.cards[2]?.card?.card?.info;
 
     const categories = RestInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((c)=>
-        c.card?.["card"]?.["@type"] ==="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    )
+        c.card?.["card"]?.["@type"] ==="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
 
     // console.log(categories);
 
@@ -28,8 +28,11 @@ const Restaurant=()=>{
             <h1 className="font-bold p-5 text-2xl">{name}</h1>
             <h3>{cuisines.join(', ')} -- {costForTwoMessage} </h3>
 
-            {categories.map((category) => 
-              <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card}/>
+            {categories.map((category,index) => 
+              <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card}
+              popdown={index===popdowncategory?true:false}
+              setpopdowncategory={()=>setpopdowncategory(index)}
+              />
             )}
 
         </div>

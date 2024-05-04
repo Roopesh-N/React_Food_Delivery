@@ -12,7 +12,9 @@ const useRestMenu=(resId)=>{
         const api= await fetch(REST_URL+resId)
         const json=await api.json();
         setRestInfo(json.data);
+        
     }
+
     return restInfo
 }
 
