@@ -4,6 +4,7 @@ import { useState,useEffect,useContext} from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import userContexts from "../utils/userContexts";
+import { useSelector } from "react-redux";
 
 const HeaderPart=()=>{
     const [btnName,setbtnName]=useState("Login");
@@ -15,6 +16,11 @@ const HeaderPart=()=>{
 
     const onlinestatus=useOnlineStatus();
     const {loggedInUser}=useContext(userContexts);
+
+    // subscribing to the store using useselector hook
+    const cartItems=useSelector((store)=>store.cart.items);
+
+    console.log(cartItems);
 
     return (
     <div className="flex justify-between bg-gray-300">
@@ -29,7 +35,9 @@ const HeaderPart=()=>{
                 <li className="pr-5"><Link to="/">Home</Link></li>
                 <li className="pr-5"><Link to="/about">About Us</Link></li>
                 <li className="pr-5"><Link to="#">Contact Us</Link></li>
-                <li className="pr-5">Cart</li>
+                <li className="pr-5">
+                    <Link to="/Cart">Cart-({cartItems.length} items)</Link>
+                </li>
                 <li className="pr-5"><Link to="/grocery">Grocery</Link></li>
                 <li className="pr-5"><button className="login-btn" onClick={()=>{
                     if(btnName=="Login"){

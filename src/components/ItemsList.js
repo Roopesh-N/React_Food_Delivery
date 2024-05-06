@@ -14,7 +14,6 @@ const ItemsList=({data})=>{
                 </div>
                 <div>
                     <ItemImage data={data}/>
-
                 </div>
             </div>
 

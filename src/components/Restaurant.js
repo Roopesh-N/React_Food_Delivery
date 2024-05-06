@@ -10,7 +10,7 @@ const Restaurant=()=>{
     const { restId } = useParams();
 
     const RestInfo=useRestMenu(restId);
-    const [popdowncategory,setpopdowncategory]=useState(null);
+    const [popdowncategory,setpopdowncategory]=useState(0);
 
     if(RestInfo===null){
        return <Shimmer/>
