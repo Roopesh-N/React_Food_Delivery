@@ -9,3 +9,12 @@
  *  -copyRights
  *  -links
  */
+<!-- 
+#redux toolkit
+-install @reduxjs/toolkit and react-redux
+-build our store
+- connect our store to out app
+- slice
+- dispatch(action)
+-selector
+ -->
