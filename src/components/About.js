@@ -14,8 +14,8 @@ export class About extends React.Component{
     render(){
         console.log("child constructor")
         return (
-            <div>
-                <h1>About us Page</h1>
+            <div className="text-center">
+                <h1 className="text-2xl font-semibold">About us Page</h1>
     
                 <UserClass profession={"Full stack developer from class props"} count={0}/>
             </div>

@@ -34,7 +34,7 @@ const HeaderPart=()=>{
                 </li>
                 <li className="pr-5"><Link to="/">Home</Link></li>
                 <li className="pr-5"><Link to="/about">About Us</Link></li>
-                <li className="pr-5"><Link to="#">Contact Us</Link></li>
+                <li className="pr-5"><Link to="/contact">Contact Us</Link></li>
                 <li className="pr-5">
                     <Link to="/Cart">Cart-({cartItems.length} items)</Link>
                 </li>

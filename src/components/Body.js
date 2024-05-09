@@ -47,7 +47,7 @@ const Body=()=>{
                 <div className="filter m-4 p-4 flex items-center">
                 <button className="px-4 py-2 bg-gray-300 rounded-md" onClick={()=>{
                     const toprated=filteredRestlist.filter(
-                        (resto)=> resto.info.avgRating >=4.5 );
+                        (resto)=> resto.info.avgRating >4.0 );
                     setfilteredRestlist(toprated);
                 }}>Top rated restaurants</button>
                 </div>
