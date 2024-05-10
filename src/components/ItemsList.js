@@ -3,7 +3,7 @@ import ItemImage from "./ItemImage"
 const ItemsList=({data})=>{
     // console.log(data)
     return (
-        <div className="border-gary-400 py-3 border-b-2">
+        <div data-testid="item" className="border-gary-400 py-3 border-b-2">
             <div className="flex justify-between">
             <div className="text-left">
                 <h3>{data.card.info.name}</h3>
