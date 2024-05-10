@@ -20,7 +20,7 @@ const HeaderPart=()=>{
     // subscribing to the store using useselector hook
     const cartItems=useSelector((store)=>store.cart.items);
 
-    console.log(cartItems);
+    // console.log(cartItems);
 
     return (
     <div className="flex justify-between bg-gray-300">
@@ -30,7 +30,7 @@ const HeaderPart=()=>{
         <div className="Nav-items">
             <ul className="flex p-5">
                 <li className="pr-5"> 
-                    Online :{onlinestatus? "yes":"No"}
+                    Online :{onlinestatus? "Yes":"No"}
                 </li>
                 <li className="pr-5"><Link to="/">Home</Link></li>
                 <li className="pr-5"><Link to="/about">About Us</Link></li>

@@ -34,7 +34,7 @@ const Body=()=>{
         <div className="body">
             <div className="filter flex">
                 <div className="search m-4 p-2">
-                    <input type="text" className="border border-solid border-gray m-5 shadow-md" value={inputText} onChange={(inp)=>{
+                    <input type="text" className="border border-solid border-gray m-5 shadow-md" data-testid="search" value={inputText} onChange={(inp)=>{
                         setinputText(inp.target.value);
                     }}></input>
                     <button className="bg-green-400 px-3 py-1 rounded-md pr-3 " onClick={()=>{
@@ -63,7 +63,7 @@ const Body=()=>{
             <div className="res-container flex flex-wrap">
                 {
                     filteredRestlist.map((resto)=>(<Link to={"/restaurant/" + resto.info.id} key={resto.info.id}> 
-                    {resto.info.avgRating>=4.5? <PromotedCard resData={resto.info}/> : <Rescard  resData={resto.info}/>}
+                    {resto.info.avgRating>=4.2? <PromotedCard resData={resto.info}/> : <Rescard  resData={resto.info}/>}
                     </Link>
                         
                         ))}
