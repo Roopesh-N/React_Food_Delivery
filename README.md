@@ -1,4 +1,4 @@
-/**App Planning
+/**
  * header
  *  -logo
  *  -Nav items
